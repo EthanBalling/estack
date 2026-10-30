@@ -1,0 +1,145 @@
+# estack
+
+Two independent [Agent Skills](https://agentskills.io/specification) for portable
+project context:
+
+| Skill | Use |
+| --- | --- |
+| [agent-workspace](skills/agent-workspace/SKILL.md) | Initialize, audit, migrate, validate, or explicitly clean up agent instructions and memory. |
+| [update-memory](skills/update-memory/SKILL.md) | Save consequential context during work; maintain useful continuation pointers or report no change. |
+
+The [approved design](docs/design/README.md) owns behavior and safety policy.
+Each skill carries its own relative references and works without the other.
+There are no hooks, background services, recurring audits, or mandatory external
+skills. Existing custom skills are left intact.
+
+## Install
+
+Use the [skills CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md)
+with Node.js and existing Git/authentication configuration. Current upstream
+documentation requires Node.js 22.20+. Installation tooling is separate from
+runtime skill requirements.
+
+From an absolute path to this checkout, install either or both skills globally:
+
+```sh
+npx skills add /path/to/estack --skill agent-workspace update-memory -g
+```
+
+Select the desired compatible agents interactively. For a noninteractive
+installation targeting Codex, append `-a codex -y`. Omit `-g` for a project-local
+installation. Select just one name after `--skill` for an independent install.
+Inspect existing same-name installations before replacement; never remove other
+skills as part of an update.
+
+List installed skills and check source discovery:
+
+```sh
+npx skills list -g
+npx skills add /path/to/estack --list
+```
+
+After implementation is published to the existing remote, additional machines
+can install directly:
+
+```sh
+npx skills add EthanBalling/estack --skill agent-workspace update-memory -g
+```
+
+Until publication, transfer/clone the implemented source to the other machine
+and use its absolute checkout path. The remote design-only revision does not
+contain these skills. Use existing authentication; installation never requires
+changing repository visibility or credentials.
+
+## Update
+
+Local-path installs are installed copies, not live source-checkout links.
+After updating the checkout and reviewing changes, rerun the same local install
+command to refresh only these skills. For remote-backed installations after
+publication, use:
+
+```sh
+npx skills check
+npx skills update agent-workspace update-memory -g
+```
+
+Confirm installer/version behavior with `npx skills --help`; avoid a blanket
+update of unrelated skills. For manual installation without Node, copy one
+complete `skills/<name>/` directory to the selected harness's documented skill
+directory, preserving bundled resources. Recopy on update.
+
+## Use
+
+Invoke by name using the active agent's skill mechanism, or ask for the operation:
+
+- “Use agent-workspace to initialize this project as a local plant catalog.”
+- “Use agent-workspace to audit this repository without changing it.”
+- “Use agent-workspace to migrate the agent records in this selected directory;
+  preserve the knowledge, domain rules, and uncommitted work.”
+- “Use agent-workspace to validate these instructions and references.”
+- “Use agent-workspace to clean up these explicitly selected superseded notes.”
+- “Use update-memory to save the accepted decision and unfinished next action.”
+
+`AGENTS.md` remains a minimal context router, generally 150–300 words or fewer.
+Useful supporting resources live under `.agents/`, with `INDEX.md` for nontrivial
+navigation. Optional concepts can be files, directories, existing owners, or
+absent. Initialization creates only grounded resources. Migration normalizes
+operational resources while preserving useful meaning and verified recovery.
+
+Memory capture follows existing conventions, including projects without
+`.agents/`. It updates authoritative owners, can create a warranted record, and
+keeps handoffs separate from durable knowledge. Already recorded or trivial
+context produces no writes. Neither skill automatically stages, commits, pushes,
+merges, settles a thread, or executes a discovered backlog.
+
+## Validate
+
+Run the deterministic checks from the repository:
+
+```sh
+python3 -B -m unittest discover -s tests -v
+python3 -B skills/agent-workspace/scripts/validate_workspace.py .
+git diff --check
+```
+
+For a workspace outside the checkout, run the installed helper with an explicit
+target. It is read-only and optional; ordinary skill operation uses available
+file tools and requires no particular runtime. See its
+[coverage and limits](skills/agent-workspace/references/validation.md).
+
+[Behavioral walkthroughs](tests/scenarios.md) cover initialization, existing Git
+and `.agents/` conventions, migration/recovery, cleanup, optional grilling
+absence, meaningful and no-change capture, independent memory owners, privacy,
+and contested updates. Keep raw inputs/results under ignored `.local/`.
+
+Validation on 2026-10-30 passed eight mechanical/package tests and author-run
+disposable walkthroughs. Recovery copies matched uncommitted originals, essential
+rules and unique knowledge survived migration, Git indexes and unrelated work
+were preserved, and repeat/no-change checks preserved content and timestamps.
+These checks do not prove future model behavior, complete semantic preservation,
+secret absence, history recovery, or race-free writes.
+
+## Compatibility and delivery
+
+Runtime skills need Markdown file access and a compatible agent capable of
+following instructions. Git, GitHub CLI, Node, Python, and third-party grilling
+skills are not runtime dependencies. The optional checker/tests use Python 3.9+
+standard library; the Git fixture skips if Git is unavailable.
+
+Linux was exercised. macOS should support the portable Markdown and Python
+tooling but was not exercised. Windows file operations can work with suitable
+tools; shell examples, symlink permissions, path/case behavior, and native skill
+discovery need platform-specific verification. Use installer copy mode when
+symlinks are unavailable. The boundary test needs symlink support.
+
+Discovery, automatic instruction loading, inheritance, and live reload are
+different capabilities. Installed files do not guarantee a running session will
+reload them. Check the selected harness's current documentation and observed
+behavior; start a fresh session when necessary. No adapter is required by estack.
+
+Both skills were installed globally from the local checkout on the development
+host and listed for Codex and Claude Code; bundled resources were checked outside
+the checkout. Native invocation in a fresh session remains unverified. Other
+installed skills were preserved. Implementation publication remains pending
+approval; the existing remote and visibility were preserved. No real persistent
+workspace was migrated.
