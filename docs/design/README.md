@@ -4,7 +4,7 @@ Approved 2026-10-30. This specification defines two independent Agent Skills for
 
 The approved [migration scope expansion](DECISIONS.md#pilot-follow-up-alignment--2026-10-30) covers whole-directory restructuring, purpose-based artifact ownership, adaptive files/directories, discoverable internal working resources, dependency-aware moves and routine memory maintenance. The skill packages implement this expansion; see the repository [validation guidance](../../README.md#validate) for exercised checks and limits. Persistent-workspace migration remains a separate operation; synthetic validation does not certify a future migration.
 
-The approved [legacy workflow replacement choices](DECISIONS.md#legacy-workflow-replacement-alignment--2026-10-30) add read-only familiarization, safe initialization detail and an optional section reader. Source implementation and synthetic validation are complete; publication and installation remain pending. Local workflow retirement awaits replacement delivery, consumer repairs and recovery verification.
+The approved [legacy workflow replacement choices](DECISIONS.md#legacy-workflow-replacement-alignment--2026-10-30) add read-only familiarization, safe initialization detail and an optional section reader. The packages implement these choices and have synthetic validation. Installation and local workflow retirement are separate authorized operations requiring replacement delivery, consumer repairs and recovery verification; private delivery records own host-specific status.
 
 Read the document relevant to the work:
 

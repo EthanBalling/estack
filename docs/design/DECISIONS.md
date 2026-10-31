@@ -34,7 +34,7 @@ Approved clarifications to migration scope and routine memory maintenance. These
 
 ## Legacy workflow replacement alignment — 2026-10-30
 
-User confirmed these three design choices and the resulting implementation plan. Source implementation and synthetic validation are complete; publication, installation and local retirement remain pending. Private evidence and cutover planning are kept outside distribution.
+User confirmed these three design choices and the resulting implementation plan. Source implementation and synthetic validation are complete. Publication, installation and host-local retirement are separate authorized operations; private delivery/recovery evidence owns their execution status and stays outside distribution.
 
 - **Explicit familiarization:** Add a read-only Familiarize mode to `agent-workspace`, distinct from structural audit and mutation. Follow the selected workspace's own startup rules, retrieve relevant context and report readiness/gaps; distinguish available tools from untested integrations. Preserve records and avoid automatic backlog work. See the [workspace contract](AGENT-WORKSPACE.md).
 - **Optional section reader:** Retain the existing exact-heading reader as an optional bundled `agent-workspace` helper with tested descendant, fence, introduction and failure behavior. Ordinary file tools remain sufficient, and `update-memory` stays independent. See [context policy](CONTEXT.md) and [acceptance coverage](PORTABILITY-VALIDATION.md).
