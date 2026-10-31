@@ -1,6 +1,7 @@
 # Glossary
 
 - **Workspace:** A selected project and its governing context and resources; distinct from a native conversation.
+- **Familiarization:** Read-only recovery of a selected workspace's role, relevant knowledge and work state to establish working understanding and readiness.
 - **Router:** Essential governing instructions that direct task-relevant retrieval.
 - **Owner:** The single authoritative destination for a fact, decision or kind of state.
 - **Durable knowledge:** Evidence-grounded information expected to affect future work.

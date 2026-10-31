@@ -14,6 +14,8 @@ Do not require full knowledge loading at startup. Use this adaptive hierarchy:
 
 Remaining below roughly 50% context utilization is an aspiration when measurable and practical. Do not fabricate measurements, enforce resets or prescribe unsupported commands.
 
+An optional section reader may be bundled with `agent-workspace`; normal file tools remain sufficient. It selects an exact heading with descendants through the next peer/ancestor, can include document and ancestor introductions, ignores fenced headings, and fails without content on missing or duplicate targets. State its supported Markdown and error limits. Other linked prerequisites still need retrieval. `update-memory` retains independent reading guidance and never requires this helper or its sibling package.
+
 ## Durable updates
 
 Capture information that changes future work: important requirements, discoveries, corrections, accepted decisions and reasons, reusable failed approaches, task state, outputs, verification limits and next actions. Update each authoritative owner instead of copying summaries across files. Trivial interactions require no update.

@@ -39,6 +39,8 @@ Adapt this example to actual purpose and resources; omit nonexistent pointers:
 
 Generated instructions describe responsibilities without naming skills or harnesses. Give each fact one owner; indexes and handoffs point there. Split large documents only when independent retrieval earns the navigation. A Markdown fragment is a locator, not proof that a reader bounded its output; include introductions, applicable constraints, descendants, and prerequisites, then expand if needed.
 
+For optional exact-heading helper mechanics or equal-scope footprint comparisons, consult [retrieval](retrieval.md). Ordinary file reads need no helper or additional prerequisite.
+
 ## Adaptive context hierarchy
 
 Continue while current context helps; persist consequential knowledge/state; record continuation at meaningful transitions; compact through supported native mechanisms when useful; start fresh when task/history changes warrant it. Below roughly 50% utilization is an aspiration only when measurable and practical. Never fabricate utilization, force resets, or prescribe unsupported commands.

@@ -31,3 +31,11 @@ Approved clarifications to migration scope and routine memory maintenance. These
 ## Resource discovery alignment — 2026-10-30
 
 - **Discovery stays in existing routes:** User selected keeping discovery information in `AGENTS.md`, `.agents/INDEX.md` and established task/topic routes. These pointers carry the read trigger, destination and ownership under the existing [architecture](ARCHITECTURE.md) and [context policy](CONTEXT.md). Do not introduce a new resource-header convention. Clear routes support selective retrieval without additional per-file metadata upkeep. This retains the current skill behavior; no header implementation is planned.
+
+## Legacy workflow replacement alignment — 2026-10-30
+
+User confirmed these three design choices and the resulting implementation plan. Source implementation and synthetic validation are complete; publication, installation and local retirement remain pending. Private evidence and cutover planning are kept outside distribution.
+
+- **Explicit familiarization:** Add a read-only Familiarize mode to `agent-workspace`, distinct from structural audit and mutation. Follow the selected workspace's own startup rules, retrieve relevant context and report readiness/gaps; distinguish available tools from untested integrations. Preserve records and avoid automatic backlog work. See the [workspace contract](AGENT-WORKSPACE.md).
+- **Optional section reader:** Retain the existing exact-heading reader as an optional bundled `agent-workspace` helper with tested descendant, fence, introduction and failure behavior. Ordinary file tools remain sufficient, and `update-memory` stays independent. See [context policy](CONTEXT.md) and [acceptance coverage](PORTABILITY-VALIDATION.md).
+- **Minimal local directory index:** When retiring legacy shared procedures, retain a small human-facing workspace directory index with workspace links and local ownership boundaries. Remove duplicated workflow policy only after useful meaning and dated evidence have owners and live consumers have replacements. This local retirement is distinct from publishing packages or migrating other workspaces.

@@ -21,6 +21,9 @@ Checks cover discoverable references, file/directory collisions, applicable cont
 ## Required acceptance coverage
 
 - Empty initialization creates useful grounded instructions without empty scaffolding or invented history.
+- Create-new destination collisions, hidden content, symlink/ancestor boundaries and intervening writers are preserved rather than overwritten. Explicit existing-project initialization adds only warranted missing context without an empty-only rule or changes to unrelated source/index/dirty work. Suitable existing roles remain no-ops.
+- Familiarization of existing and sparse workspaces follows actual local startup prerequisites, retrieves relevant owners, and distinguishes working understanding, missing context and untested integrations. It leaves target bytes and timestamps unchanged, without scaffolding, account probes or backlog/session actions.
+- The optional section reader works from its packaged location with ordinary Python standard-library support. Check descendant boundaries, ancestor introductions, backtick/tilde fences, exact and duplicate headings, missing/unreadable input and supported Markdown limits. File-tool-only operation and independent `update-memory` use remain valid without the helper.
 - Existing/cloned/Git/non-Git/learning/persistent projects are recognized without automatic Git setup.
 - Audit and validation leave target content unchanged; mutating operations stay within authorization.
 - Mixed documents and nested agent resources migrate into appropriate owners. Nested repository internals and external symlink destinations remain excluded unless explicitly included; intact checkout relocation follows the [separate Git boundary rules](MIGRATION.md).

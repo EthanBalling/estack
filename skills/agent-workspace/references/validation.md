@@ -1,6 +1,6 @@
 # Validation
 
-Audit and validate are read-only. Put any requested report outside target content or return it in conversation. Evaluate only the selected scope, without following symlinks or entering nested repositories unless separately included.
+Familiarize, audit and validate are read-only. Familiarize uses its [bounded readiness verification](familiarize.md#verify-and-report-readiness), not a whole-directory structural check. Put any requested report outside target content or return it in conversation. Evaluate only the selected scope, without following symlinks or entering nested repositories unless separately included.
 
 ## Coverage and completeness
 
