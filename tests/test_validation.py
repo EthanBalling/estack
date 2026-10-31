@@ -64,6 +64,42 @@ class ValidationTests(unittest.TestCase):
         self.write(".agents/NOTES/plants.md", "# Plants\n## Pruning\nUse clean tools.\n")
         self.assertEqual(validator.validate(self.root), [])
 
+    def test_artifact_group_routes_without_reading_binary_payloads(self):
+        self.write("AGENTS.md", "For task evidence, read [index](.agents/INDEX.md).")
+        self.write(".agents/INDEX.md", "For the import investigation, [task](TASKS.md).")
+        self.write(".agents/TASKS.md", "For reproduction only, [working group](imports/) and [snapshot](imports/sample.bin).")
+        payload = self.root / ".agents/imports/sample.bin"
+        payload.parent.mkdir()
+        payload.write_bytes(b"\xff\x00synthetic evidence")
+        before = snapshot(self.root)
+        self.assertEqual(validator.validate(self.root), [])
+        self.assertEqual(snapshot(self.root), before)
+        payload.unlink()
+        errors = [msg for level, msg in validator.validate(self.root) if level == "error"]
+        self.assertEqual(len(errors), 1)
+        self.assertIn("sample.bin: missing target", errors[0])
+
+    def test_nested_git_pointer_is_boundary_inside_agent_artifacts(self):
+        self.write("AGENTS.md", "For reproduction, [index](.agents/INDEX.md).")
+        self.write(".agents/INDEX.md", "[checkout](working/repro/) [internal](working/repro/NOTES.md)")
+        self.write(".agents/working/repro/.git", "gitdir: ../../../administration\n")
+        (self.root / ".agents/working/repro/NOTES.md").write_bytes(b"\xff")
+        before = snapshot(self.root)
+        findings = validator.validate(self.root)
+        self.assertEqual(len(findings), 2)
+        self.assertTrue(all(level == "warning" and "nested repository; not read" in msg
+                            for level, msg in findings))
+        self.assertEqual(snapshot(self.root), before)
+
+    def test_clean_mechanics_do_not_certify_legacy_coverage(self):
+        self.write("AGENTS.md", "# Project\nKeep data local.\n")
+        self.write("files/operational.md", "Unassessed operational plan.")
+        result = subprocess.run(["python3", str(SCRIPT), str(self.root)],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("coverage", result.stdout)
+        self.assertIn("dispositions", result.stdout)
+
     def test_missing_file_and_anchor(self):
         self.write("AGENTS.md", "[missing](missing.md) [heading](.agents/NOTES.md#absent)")
         self.write(".agents/NOTES.md", "# Known\n")

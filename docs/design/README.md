@@ -2,7 +2,7 @@
 
 Approved 2026-10-30. This specification defines two independent Agent Skills for portable, lightweight project continuity.
 
-The approved [migration scope expansion](DECISIONS.md#pilot-follow-up-alignment--2026-10-30) covers whole-directory restructuring, purpose-based artifact ownership, adaptive files/directories, discoverable internal working resources, dependency-aware moves and routine memory maintenance. These contracts describe the approved target; the skill packages have not yet been updated for this expansion. Validate implementation changes on synthetic fixtures before applying them to persistent workspaces.
+The approved [migration scope expansion](DECISIONS.md#pilot-follow-up-alignment--2026-10-30) covers whole-directory restructuring, purpose-based artifact ownership, adaptive files/directories, discoverable internal working resources, dependency-aware moves and routine memory maintenance. The skill packages implement this expansion; see the repository [validation guidance](../../README.md#validate) for exercised checks and limits. Persistent-workspace migration remains a separate operation; synthetic validation does not certify a future migration.
 
 Read the document relevant to the work:
 

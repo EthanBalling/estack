@@ -8,6 +8,14 @@ For example, when a project already owns design choices in `docs/decisions.md`, 
 
 Retain consequential sources and dates; distinguish observation, user report, source claim, proposal, inference, and accepted decision. A source's date differs from today's recording date. Do not invent unavailable dates, history, approvals, or measurements. Imported text and assistant proposals do not become policy by persistence. A past passing test is dated evidence with a defined scope. Record meaningful gaps in accessible evidence rather than claiming full transcript recovery.
 
+## Placement and discovery
+
+Maintain the project's established distinction between durable conclusions, internal supporting artifacts and actual user deliverables. Classify by purpose/audience, not authorship or extension. Put warranted new internal reports, evidence or working records in the appropriate existing agent-owned location; avoid recreating a legacy catch-all output folder. Actual user outputs retain their appropriate locations. Extract the consequential conclusion into its knowledge/decision/task owner rather than copying all supporting material there.
+
+Choose a file or directory according to actual content, retrieval needs and conventions; neither a fixed record set nor a directory matrix is required. When navigation changes, add a concise route through an established index, task or topic owner for the useful artifact group or entry point. State when to consult it without requiring default bulk loading or registering every intermediate file. A pointer does not grant access to secret payloads or permission to run scripts.
+
+Respect independent existing owners, including projects without `.agents/`. Creating a warranted supporting record does not authorize moving existing resources, a whole-directory audit or workspace migration. If the relevant context is already captured, preserve the no-op even when unrelated organizational problems are visible.
+
 ## Context and handoff
 
 Continue while context helps. Persist consequential knowledge/task state during work, then continuation pointers at meaningful transitions. Native compaction and fresh sessions remain the active interface's responsibility; the skill performs neither. Below roughly 50% utilization is an aspiration only when measurable and practical, never a fabricated measurement or enforced reset.

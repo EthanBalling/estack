@@ -5,7 +5,7 @@ project context:
 
 | Skill | Use |
 | --- | --- |
-| [agent-workspace](skills/agent-workspace/SKILL.md) | Initialize, audit, migrate, validate, or explicitly clean up agent instructions and memory. |
+| [agent-workspace](skills/agent-workspace/SKILL.md) | Initialize, audit, migrate, validate, or explicitly clean up agent records and artifacts. |
 | [update-memory](skills/update-memory/SKILL.md) | Save consequential context during work; maintain useful continuation pointers or report no change. |
 
 The [approved design](docs/design/README.md) owns behavior and safety policy.
@@ -89,13 +89,21 @@ Invoke by name using the active agent's skill mechanism, or ask for the operatio
 `AGENTS.md` remains a minimal context router, generally 150–300 words or fewer.
 Useful supporting resources live under `.agents/`, with `INDEX.md` for nontrivial
 navigation. Optional concepts can be files, directories, existing owners, or
-absent. Initialization creates only grounded resources. Migration normalizes
-operational resources while preserving useful meaning and verified recovery.
+absent. Initialization creates only grounded resources. Migration assesses the
+whole selected directory, including hidden and mixed legacy containers. It restructures agent records and non-Markdown artifacts by purpose,
+consolidates knowledge, repairs scoped dependencies and provides selective
+routes to working material, evidence and protected recovery. Each candidate group
+needs a disposition; unresolved portions remain incomplete. Actual deliverables
+and source/product material retain appropriate locations. Nested checkouts may
+relocate intact only when content, Git state and location relationships survive;
+internal restructuring and Git repairs remain separately scoped.
 
 Memory capture follows existing conventions, including projects without
 `.agents/`. It updates authoritative owners, can create a warranted record, and
-keeps handoffs separate from durable knowledge. Already recorded or trivial
-context produces no writes. Neither skill automatically stages, commits, pushes,
+keeps handoffs separate from durable knowledge. Warranted new internal supporting
+records follow established purpose-based placement and discovery, using files or
+directories as needed. Routine capture does not relocate existing resources or
+assess the whole directory. Already recorded or trivial context produces no writes. Neither skill automatically stages, commits, pushes,
 merges, settles a thread, or executes a discovered backlog.
 
 ## Validate
@@ -116,14 +124,24 @@ file tools and requires no particular runtime. See its
 [Behavioral walkthroughs](tests/scenarios.md) cover initialization, existing Git
 and `.agents/` conventions, migration/recovery, cleanup, optional grilling
 absence, meaningful and no-change capture, independent memory owners, privacy,
-and contested updates. Keep raw inputs/results under ignored `.local/`.
+and contested updates. Expansion scenarios cover mixed artifacts, consolidation,
+discovery, dependency blockers, intact checkout relocation and incomplete coverage.
+Assess coverage, semantic preservation and mechanics separately. Keep raw
+inputs/results under ignored `.local/`.
 
-Validation on 2026-10-30 passed eight mechanical/package tests and author-run
-disposable walkthroughs. Recovery copies matched uncommitted originals, essential
-rules and unique knowledge survived migration, Git indexes and unrelated work
-were preserved, and repeat/no-change checks preserved content and timestamps.
-These checks do not prove future model behavior, complete semantic preservation,
-secret absence, history recovery, or race-free writes.
+Validation on 2026-10-30 passed 11 mechanical/package tests, both skill-package
+validators, repository link checks and synthetic behavioral walkthroughs. The
+expansion walkthroughs checked coverage/dispositions separately from semantic
+preservation and mechanics: mixed artifact consolidation, exact recovery,
+scoped path repairs, protected modes, intact dirty checkout relocation, an
+explicitly unresolved linked-worktree move, selective discovery and routine
+memory maintenance. Source/deliverables and unrelated work survived; no-op
+capture and read-only reruns preserved bytes and timestamps.
+
+These authored walkthroughs do not prove future model behavior, complete
+semantic preservation, secret absence, history recovery, native loading or
+race-free writes. Linux was exercised; real persistent-workspace migration is
+separate work. The optional checker cannot certify coverage or artifact purpose.
 
 ## Compatibility and delivery
 

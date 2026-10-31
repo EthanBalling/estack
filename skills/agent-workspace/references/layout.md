@@ -21,7 +21,15 @@ Each concept may be a file, a directory, a combined record, an existing authorit
 | HANDOFF | Continuation context and owner pointers |
 | LOGS / README | Useful dated evidence / human navigation |
 
-Retain useful existing names and file/directory forms. During migration move agent operational records into `.agents/`, splitting mixed documents by purpose; human/source/output documents remain conventional. Preserve genuine nested ownership and governing scope. Do not collapse domain workspaces into one root ledger.
+Choose file/directory forms from content and retrieval needs, not a fixed `[TYPE].md` mapping. A small topic can share a file; independently retrieved topics or artifact bundles can warrant directories. Preserve useful names while replacing obsolete organization during migration. Keep genuine nested ownership and governing scope rather than collapsing domain workspaces into one root ledger.
+
+## Purpose and discovery
+
+Classify by purpose and audience, not authorship, extension or folder label. Assess internal reports, scripts, intermediate data, logs, snapshots and working environments alongside Markdown records. AI-created user deliverables and conventional source/product code retain appropriate locations; internal working code is an agent resource. Split mixed bundles by content ownership.
+
+Appropriate internal records, working material, retained evidence and protected recovery artifacts belong within the selected `.agents/` architecture, subject to dependency, privacy and restoration constraints in [migration](migration.md). Distinguish their purposes without creating a mandatory folder matrix. Extract durable lessons into their authoritative knowledge owners; retain useful dated evidence separately from current task state.
+
+Make useful artifact groups or entry points discoverable through a concise index, task or topic owner: state when to consult them and what they contain. Avoid a per-intermediate-file registry or default bulk loading. A route grants neither access to secret payloads nor permission to execute retained scripts. Hidden placement is not access control.
 
 ## Generic continuity instructions
 

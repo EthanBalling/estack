@@ -137,7 +137,8 @@ def main():
         return 1
     for level, message in findings:
         print(f"{level}: {message}")
-    print("Mechanical checks only; review preservation, ownership, privacy, and loading separately.")
+    print("Mechanical checks only; review whole-directory coverage and dispositions, "
+          "semantic preservation, dependency safety, privacy, and loading separately.")
     return int(any(level == "error" for level, _ in findings))
 
 
