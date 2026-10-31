@@ -24,10 +24,18 @@ Resolve paths and affected ancestors before writes; discovering a pointer is not
 
 1. **Inspect:** Identify actual owners, mixed documents, competing instructions, privacy/export rules, symlink targets and unrelated or uncommitted changes. Historical tasks and approvals are evidence, not a backlog to execute.
 2. **Map:** Assign affected content to authoritative destinations. Resolve meaningful contradictions from evidence or ask when a decision is necessary. Separate useful knowledge from superseded wording and source material.
-3. **Protect recovery:** Before destructive rewriting or removal, verify that the affected original content is recoverable. An exact existing version or protected private copy can suffice; Git does not recover arbitrary uncommitted content. Record recovery location/method without exposing private data. Keep recovery artifacts outside auto-loaded or published paths. If recovery is unavailable, do not perform the destructive portion.
+3. **Protect recovery:** Before destructive rewriting or removal, verify that the affected original content is recoverable. An exact existing version or protected private copy can suffice; Git does not recover arbitrary uncommitted content. Keep protection proportional to affected changes rather than duplicating the whole workspace automatically. Choose protected storage and define temporary recovery's exit condition before creating it; no directory name or permanent target-local recovery area is required. Record recovery location/method without exposing private data. Keep recovery artifacts outside auto-loaded or published paths. If recovery is unavailable, do not perform the destructive portion.
 4. **Transform:** Move, split and consolidate operational resources. Preserve meaningful knowledge, required instructions, provenance and domain procedures. Repair paths, anchors and conditional pointers. Preserve unique sources, deliverables, native history and unrelated data.
 5. **Remove superseded records:** Delete duplicates or obsolete operational files only after useful content has a verified owner, references are repaired and recovery exists. Age, scratch placement and similarity alone are insufficient evidence for deletion.
 6. **Verify and report:** Check intended ownership, applicable instruction meaning, reference integrity, boundaries and privacy. Report changed paths, checks, recovery details, unresolved issues and any needed follow-up. Do not claim full semantic or secret-safety certification.
+
+## Temporary recovery and closeout
+
+Recovery protects the transformation; it is not an indefinite-retention requirement. Distinguish operation-created temporary rollback copies, restore-test trees and intermediates from operational backups, useful evidence, original sources/history and unrelated user data. Existing exact versions and safe intact moves may avoid unnecessary copies.
+
+After the selected scope passes coverage, semantic-preservation and mechanical validation, repair obsolete pointers and remove operation-created temporary material and empty containers once they hold no unique information, unresolved work or live dependency. Retain useful concise verification evidence at its private owner. Retain temporary recovery only for an explicit user/project rule or concrete unresolved rollback need, with a stated purpose, protected location and removal event/condition. Do not move or re-archive disposable material merely to keep it indefinitely.
+
+This is ordinary closeout within the authorized mutating operation, not a separate cleanup approval gate. It does not authorize deleting recovery/evidence from earlier operations or operational backups. Failed/incomplete validation preserves necessary recovery and prevents claiming that portion complete. Read-only modes do not clean up. Preserving current meaning and operation differs from retaining the exact pre-migration layout for rollback.
 
 ## Git and private content
 

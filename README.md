@@ -109,6 +109,13 @@ and source/product material retain appropriate locations. Nested checkouts may
 relocate intact only when content, Git state and location relationships survive;
 internal restructuring and Git repairs remain separately scoped.
 
+Migration recovery protects changes through validation. On successful closeout,
+remove the operation's disposable backup/restore-test copies, intermediates and
+empty containers; retain useful verification evidence. Temporary recovery stays
+only for a specific retention rule or unresolved rollback need, with a removal
+condition. No target-local recovery folder is required. Existing operational
+backups and earlier recovery are separate owners, not automatic cleanup targets.
+
 Memory capture follows existing conventions, including projects without
 `.agents/`. It updates authoritative owners, can create a warranted record, and
 keeps handoffs separate from durable knowledge. Warranted new internal supporting

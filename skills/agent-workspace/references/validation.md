@@ -14,6 +14,7 @@ Report coverage separately from the list of edited files. A preserved root route
 - Check local links, anchors, and conditional pointers in affected instructions, indexes, and resources; report external references without claiming they were verified.
 - Count router words as a bulk warning, preserving necessary instructions.
 - For migration/cleanup, compare exact originals with recovery copies, inspect Git index/dirty-work preservation, and resolve every item in the preservation map.
+- For mutating-operation closeout, account for newly created temporary recovery, restore tests and intermediates. After successful validation, confirm they are removed with obsolete pointers/empty containers, or retained for a specific rule/unresolved need with an exit condition. Preserve operational backups and useful evidence; read-only validation only reports this disposition.
 - Verify moved script consumers, environment paths, permissions, symlinks and restoration references. For intact checkouts compare complete content and Git state/operation before and after; check metadata pointers and location relationships without internal repairs.
 - Repeat a suitable operation: unchanged content needs no new timestamps, summaries, backups, or scaffolding.
 
