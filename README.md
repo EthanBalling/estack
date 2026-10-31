@@ -39,24 +39,22 @@ npx skills list -g
 npx skills add /path/to/estack --list
 ```
 
-After implementation is published to the existing remote, additional machines
-can install directly:
+Additional machines can install directly from the existing remote:
 
 ```sh
 npx skills add EthanBalling/estack --skill agent-workspace update-memory -g
 ```
 
-Until publication, transfer/clone the implemented source to the other machine
-and use its absolute checkout path. The remote design-only revision does not
-contain these skills. Use existing authentication; installation never requires
-changing repository visibility or credentials.
+For offline or local-source installation, transfer/clone the implemented source
+to the other machine and use its absolute checkout path. Use existing
+authentication; installation never requires changing repository visibility or
+credentials.
 
 ## Update
 
 Local-path installs are installed copies, not live source-checkout links.
 After updating the checkout and reviewing changes, rerun the same local install
-command to refresh only these skills. For remote-backed installations after
-publication, use:
+command to refresh only these skills. For remote-backed installations, use:
 
 ```sh
 npx skills check
@@ -140,6 +138,6 @@ behavior; start a fresh session when necessary. No adapter is required by estack
 Both skills were installed globally from the local checkout on the development
 host and listed for Codex and Claude Code; bundled resources were checked outside
 the checkout. Native invocation in a fresh session remains unverified. Other
-installed skills were preserved. Implementation publication remains pending
-approval; the existing remote and visibility were preserved. No real persistent
+installed skills were preserved. Implementation is published to the existing
+remote with user approval; its visibility was preserved. No real persistent
 workspace was migrated.
