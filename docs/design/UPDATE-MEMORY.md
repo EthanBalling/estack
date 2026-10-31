@@ -16,6 +16,8 @@ Users can capture discoveries during work, finish a task, prepare for a break or
 
 Concurrent conflicts follow the minimal procedure in [context policy](CONTEXT.md). Preserve uncontested useful updates where safe; report contested updates without claiming they were saved.
 
+Follow the project's established distinction between durable conclusions, internal supporting artifacts and actual user deliverables. Put warranted new internal records in the appropriate existing agent-owned location instead of recreating a legacy catch-all output folder. Select a file or directory from actual content and project conventions; maintain concise discovery routes through established owners when needed without bulk-loading supporting artifacts. Respect independent existing owners in projects without `.agents/`. This maintenance does not authorize relocation of existing resources or a whole-directory audit, and already recorded context still produces no change.
+
 ## Boundaries
 
 The skill operates within the existing architecture and maintenance authorization. It may create a useful record, but does not scaffold, migrate or redesign the workspace, invoke `agent-workspace`, or substantially change governing/safety meaning without approval.

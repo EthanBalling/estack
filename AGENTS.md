@@ -8,6 +8,8 @@ Approved architecture governs implementation; surface material contradictions.
 Keep entry points small and resource links relative to each installed skill.
 Each skill must work without the other or any third-party skill. Runtime use
 requires file tools, not Git or an installer. Python is optional validation tooling.
+Keep tracked documentation, examples, and fixtures system-agnostic; keep actual
+host/account details, private paths, and local execution history under `.local/`.
 Use synthetic disposable projects for verification; never migrate real persistent
 workspaces as an implementation test. Preserve other installed skills.
 

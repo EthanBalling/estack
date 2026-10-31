@@ -23,11 +23,16 @@ Checks cover discoverable references, file/directory collisions, applicable cont
 - Empty initialization creates useful grounded instructions without empty scaffolding or invented history.
 - Existing/cloned/Git/non-Git/learning/persistent projects are recognized without automatic Git setup.
 - Audit and validation leave target content unchanged; mutating operations stay within authorization.
-- Mixed documents and nested agent resources migrate into appropriate owners; nested repositories/external symlink destinations remain excluded unless explicitly included.
+- Mixed documents and nested agent resources migrate into appropriate owners. Nested repository internals and external symlink destinations remain excluded unless explicitly included; intact checkout relocation follows the [separate Git boundary rules](MIGRATION.md).
+- A mixed legacy workspace exercises operational plans, internal reports, scripts, logs, evidence and snapshots under misleading `files/`, `scratch/` and hidden locations, alongside actual user deliverables and original sources. Verify whole-directory assessment and explicit dispositions, purpose-based separation, adaptive file/directory choices, useful knowledge extraction and repaired discovery routes. Unmodified containers require assessment or an explicit boundary, not an assumed exemption.
+- Distinguish coverage/completeness, semantic preservation and mechanical link/recovery checks. Test that unresolved candidate groups prevent a claim that their portion of migration is complete, even if every edited-file check passes.
+- Working environments, hard-coded script paths and synthetic protected recovery bundles exercise dependency-aware moves or explicitly justified blockers. Use no real credentials; preserve protections and restoration references. Internal supporting artifacts remain discoverable without default bulk loading; no required directory matrix, blanket alias layer or archive of redundant versions is introduced.
+- An intact nested standalone checkout can relocate while preserving its complete internal content and dirty/staged/untracked/ignored state, with Git operation and relevant consumers checked afterward. A checkout whose location relationships cannot be preserved without internal or external changes is reported rather than broken. Relocation does not permit internal restructuring or Git configuration/index changes.
 - Useful content, domain safety and provenance survive consolidation; references resolve; destructive changes have verified recovery, including uncommitted originals.
 - Dirty/unrelated work, tracking/privacy conflicts and ambiguous owners are preserved or reported rather than silently overwritten.
 - Repeating an operation on suitable content produces no unnecessary changes.
 - Memory capture updates the correct owners, can create a warranted supporting record, and updates handoffs/indexes only when useful.
+- Routine capture maintains the established distinction between durable knowledge, internal supporting artifacts and actual user outputs, using justified files/directories and concise routes without recreating a catch-all folder, auditing the whole workspace or migrating existing resources.
 - Trivial or already captured context produces a no-op; contested writes preserve intervening content and report unsaved proposals.
 - Neither skill depends on a particular harness, third-party skill or hard-coded implementation runtime. `update-memory` performs no Git publication, workspace migration or session lifecycle action.
 

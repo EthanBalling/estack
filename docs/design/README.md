@@ -1,6 +1,8 @@
 # estack design
 
-Approved 2026-10-30. This specification defines two independent Agent Skills for portable, lightweight project continuity. It authorizes a later implementation; the design session delivers documentation only.
+Approved 2026-10-30. This specification defines two independent Agent Skills for portable, lightweight project continuity.
+
+The approved [migration scope expansion](DECISIONS.md#pilot-follow-up-alignment--2026-10-30) covers whole-directory restructuring, purpose-based artifact ownership, adaptive files/directories, discoverable internal working resources, dependency-aware moves and routine memory maintenance. These contracts describe the approved target; the skill packages have not yet been updated for this expansion. Validate implementation changes on synthetic fixtures before applying them to persistent workspaces.
 
 Read the document relevant to the work:
 
@@ -14,4 +16,4 @@ Read the document relevant to the work:
 
 Shared policy is authoritative in these documents; individual skill specifications reference it rather than repeat it. Raw audits, temporary handoffs and scratch material are private local artifacts, excluded from distribution.
 
-Implementation tools remain open. No skill implementation, installation, workspace migration, global skill cleanup, repository publication or native session management is part of this deliverable.
+Implementation tools remain open. These specifications are distinct from executing a migration, installing skills, publishing a repository or managing native sessions; each operation requires its own applicable authorization.

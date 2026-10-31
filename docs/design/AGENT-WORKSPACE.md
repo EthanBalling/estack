@@ -25,7 +25,7 @@ Explicit mutating requests imply authorization for routine creation, restructuri
 ## Procedure and completion
 
 1. Discover the actual root, governing instructions, hidden resources, owners, Git/non-Git state, nested scopes, symlinks and privacy/export boundaries. Inspect targeted content rather than bulk-loading histories. Finish when scope and material constraints are known.
-2. Map content to the [architecture](ARCHITECTURE.md). Identify conflicts, duplicates, stale summaries and relevant existing procedures. Finish when each affected resource has an intended owner or a reported unresolved choice.
+2. Map content to the [architecture](ARCHITECTURE.md). Identify conflicts, duplicates, stale summaries and relevant existing procedures. Assess the whole selected directory, including legacy operational containers and mixed artifact bundles, under the [migration scope rules](MIGRATION.md). Finish when each candidate resource group has an owner and disposition, an explicit boundary exclusion, or a reported unresolved choice; an edited-file-only map is insufficient.
 3. For mutating operations, follow [migration and safety](MIGRATION.md). For read-only operations, report changes that would be needed without applying them.
 4. Validate the result using [the acceptance contract](PORTABILITY-VALIDATION.md). Report changed paths, findings, actual checks, recovery information and unresolved limitations. An already suitable workspace may require no changes.
 

@@ -1,3 +1,33 @@
+# Private audits, planning scratch, handoffs, and recovery copies
 /.local/
+
+# Local environment configuration (keep sanitized examples distributable)
+/.env
+/.env.*
+!/.env.example
+!/.env.sample
+
+# Local dependencies and virtual environments
+/.venv/
+/venv/
+/node_modules/
+
+# Python bytecode and generated validation artifacts
 __pycache__/
 *.pyc
+/.pytest_cache/
+/.mypy_cache/
+/.ruff_cache/
+/.coverage
+/.coverage.*
+/htmlcov/
+/coverage.xml
+
+# Local editor and operating-system state
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db

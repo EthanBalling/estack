@@ -13,12 +13,20 @@ Each skill carries its own relative references and works without the other.
 There are no hooks, background services, recurring audits, or mandatory external
 skills. Existing custom skills are left intact.
 
+The repository keeps `skills/` as the installable packages, `docs/design/` as
+sanitized specifications and maintenance decisions, and `tests/` as reusable
+validation. `AGENTS.md` guides contributions. Private audits, raw planning
+material, migration backups and temporary handoffs belong under ignored
+`.local/`; local environment files, dependency folders and generated artifacts
+are also excluded by `.gitignore`. Each skill is self-contained and does not
+require the repository's design documents or tests at runtime.
+
 ## Install
 
 Use the [skills CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md)
-with Node.js and existing Git/authentication configuration. Current upstream
-documentation requires Node.js 22.20+. Installation tooling is separate from
-runtime skill requirements.
+with its supported Node.js version and existing Git/authentication configuration.
+Consult the CLI documentation for installation prerequisites; installation
+tooling is separate from runtime skill requirements.
 
 From an absolute path to this checkout, install either or both skills globally:
 
@@ -135,9 +143,7 @@ different capabilities. Installed files do not guarantee a running session will
 reload them. Check the selected harness's current documentation and observed
 behavior; start a fresh session when necessary. No adapter is required by estack.
 
-Both skills were installed globally from the local checkout on the development
-host and listed for Codex and Claude Code; bundled resources were checked outside
-the checkout. Native invocation in a fresh session remains unverified. Other
-installed skills were preserved. Implementation is published to the existing
-remote with user approval; its visibility was preserved. No real persistent
-workspace was migrated.
+After installation, check that each selected harness discovers the skill and
+that its bundled resources are accessible outside the source checkout. File
+discovery does not establish successful native invocation or live reload.
+Preserve unrelated installed skills when refreshing these packages.
