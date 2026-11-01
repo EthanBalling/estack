@@ -169,9 +169,7 @@ symlinks are unavailable. The boundary test needs symlink support.
 Discovery, automatic instruction loading, inheritance, and live reload are
 different capabilities. Installed files do not guarantee a running session will
 reload them. Check the selected harness's current documentation and observed
-behavior; start a fresh session when necessary. estack requires no adapter. If a
-selected harness does not scan the installer's target, add only its documented
-pointer or copy for these skills, keeping the installed package as the source.
+behavior; start a fresh session when necessary. No adapter is required by estack.
 
 After installation, check that each selected harness discovers the skill and
 that its bundled resources are accessible outside the source checkout. File
