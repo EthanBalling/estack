@@ -33,13 +33,15 @@ def headings(lines: list[str]) -> list[Heading]:
             continue
         match = re.match(r"^ {0,3}(#{1,6})(?:[ \t]+|$)", text)
         if match:
-            result.append(Heading(index, len(match[1]), text))
+            # Trailing whitespace is not heading content; keep markers and indentation exact.
+            result.append(Heading(index, len(match[1]), text.rstrip(" \t")))
     return result
 
 
 def read_section(content: str, target: str, preamble: bool = False) -> str:
     lines = content.splitlines(keepends=True)
     entries = headings(lines)
+    target = target.rstrip(" \t")
     matches = [i for i, entry in enumerate(entries) if entry.text == target]
     if len(matches) != 1:
         raise ValueError(f"expected one exact heading {target!r}; found {len(matches)} (use --list)")
@@ -73,7 +75,7 @@ def main() -> int:
     if not arguments.list and arguments.heading is None:
         parser.error("provide an exact heading or --list")
     try:
-        content = arguments.file.read_text(encoding="utf-8")
+        content = arguments.file.read_text(encoding="utf-8-sig")  # A leading BOM is not content.
         if arguments.list:
             output = "".join(f"{h.line + 1}\t{h.text}\n" for h in headings(content.splitlines(keepends=True)))
         else:

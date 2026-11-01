@@ -18,7 +18,7 @@ python3 /path/to/agent-workspace/scripts/read_section.py FILE '## Exact heading'
 python3 /path/to/agent-workspace/scripts/read_section.py FILE '### Exact child' --preamble
 ```
 
-Python 3.9+ standard library is sufficient. Listing prints real ATX headings with 1-based line numbers. The target must exactly match the listed heading line, including `#` markers, indentation and optional closing hashes. Selected output includes descendants through the next peer/ancestor boundary. `--preamble` adds document lead and applicable ancestor headings/introductions, excluding unrelated siblings. Linked prerequisites remain separate reads.
+Python 3.9+ standard library is sufficient. Listing prints real ATX headings with 1-based line numbers. The target must exactly match the listed heading line, including `#` markers, indentation and optional closing hashes; trailing whitespace and a leading byte-order mark are ignored. Selected output includes descendants through the next peer/ancestor boundary. `--preamble` adds document lead and applicable ancestor headings/introductions, excluding unrelated siblings. Linked prerequisites remain separate reads.
 
 Matching backtick/tilde fences suppress apparent headings until a valid same-character closing fence of at least the opening length. This is an ATX reader, not a general Markdown renderer: setext headings and headings in blockquotes/lists are unsupported. Duplicate/missing exact targets, unreadable files and invalid UTF-8 return nonzero with stderr and no content. Usage errors return 2, read/selection errors 1, success 0. Never silently select a duplicate or truncate required context to meet a token target.
 

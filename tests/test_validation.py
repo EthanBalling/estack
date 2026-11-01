@@ -2,6 +2,7 @@
 
 import hashlib
 import importlib.util
+import os
 from pathlib import Path
 import re
 import shutil
@@ -133,6 +134,57 @@ class ValidationTests(unittest.TestCase):
         self.write("AGENTS.md", "```md\n[x](absent.md)\n```\n[ok](.agents/NOTES.md#result-1)")
         self.write(".agents/NOTES.md", "# Result\n# Result\n")
         self.assertEqual(validator.validate(self.root), [])
+
+    def test_undecodable_resource_is_reported_without_hiding_other_findings(self):
+        self.write("AGENTS.md", "Read [notes](.agents/notes.md) and [legacy](.agents/legacy.md#intro).")
+        self.write(".agents/notes.md", "[gone](absent.md)")
+        (self.root / ".agents/legacy.md").write_bytes(b"# Intro\ncaf\xe9 notes\n")
+        before = snapshot(self.root)
+        result = subprocess.run(["python3", "-B", str(SCRIPT), str(self.root)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertIn(".agents/notes.md -> absent.md: missing target", result.stdout)
+        self.assertIn(".agents/legacy.md: not readable as UTF-8 Markdown", result.stdout)
+        self.assertIn("AGENTS.md -> .agents/legacy.md#intro: anchor not checked", result.stdout)
+        self.assertEqual(snapshot(self.root), before)
+
+    @unittest.skipIf(not hasattr(os, "geteuid") or os.geteuid() == 0, "needs non-root permission checks")
+    def test_unreadable_file_and_directory_are_reported(self):
+        self.write("AGENTS.md", "# Project\n")
+        locked = self.write(".agents/locked.md", "private")
+        hidden = self.root / ".agents/sealed"
+        self.write(".agents/sealed/inner.md", "[gone](absent.md)")
+        locked.chmod(0)
+        hidden.chmod(0)
+        self.addCleanup(locked.chmod, 0o644)
+        self.addCleanup(hidden.chmod, 0o755)
+        findings = validator.validate(self.root)
+        self.assertTrue(any(level == "error" and ".agents/locked.md: not readable" in msg
+                            for level, msg in findings), findings)
+        self.assertTrue(any(level == "warning" and ".agents/sealed: directory not readable" in msg
+                            for level, msg in findings), findings)
+
+    def test_inline_code_titles_and_balanced_destinations(self):
+        self.write("AGENTS.md", "Template: `[name](owner.md)` or ``[x](`y`.md)``.\n"
+                                "[single](absent-a.md 'title') [paren](absent-b.md (title)) "
+                                "[balanced](.agents/file_(1).md) [code `x` text](.agents/file_(1).md)\n")
+        self.write(".agents/file_(1).md", "# Notes\n")
+        errors = sorted(msg for level, msg in validator.validate(self.root) if level == "error")
+        self.assertEqual(errors, ["AGENTS.md -> absent-a.md: missing target",
+                                  "AGENTS.md -> absent-b.md: missing target"])
+
+    def test_rendered_heading_text_anchors(self):
+        self.write("AGENTS.md", "[a](.agents/N.md#collaboration-practices) [b](.agents/N.md#snake_case-option) "
+                                "[c](.agents/N.md#__init__-hook) [d](.agents/N.md#linked-title) "
+                                "[e](.agents/N.md#bold-term)")
+        self.write(".agents/N.md", "## _Collaboration Practices_ \n## snake_case option\n## `__init__` hook\n"
+                                   "## [Linked](N.md) title\n### **Bold** __term__\n")
+        self.assertEqual(validator.validate(self.root), [])
+
+    def test_byte_order_mark_and_empty_heading_anchors(self):
+        self.write("AGENTS.md", "﻿[first](.agents/NOTES.md#first) [fake](.agents/NOTES.md#next-line)")
+        self.write(".agents/NOTES.md", "﻿# First\n#\nNext line\n")
+        errors = [msg for level, msg in validator.validate(self.root) if level == "error"]
+        self.assertEqual(errors, ["AGENTS.md -> .agents/NOTES.md#next-line: missing anchor"])
 
     def test_independent_packages_outside_checkout(self):
         for name in ("agent-workspace", "update-memory"):

@@ -34,11 +34,17 @@ From an absolute path to this checkout, install either or both skills globally:
 npx skills add /path/to/estack --skill agent-workspace update-memory -g
 ```
 
-Select the desired compatible agents interactively. For a noninteractive
-installation targeting Codex, append `-a codex -y`. Omit `-g` for a project-local
-installation. Select just one name after `--skill` for an independent install.
-Inspect existing same-name installations before replacement; never remove other
-skills as part of an update.
+Select compatible agents interactively, or append `-y` to accept the installer's
+default targets; add `-a <agent>` only to narrow them. Omit `-g` for a
+project-local installation. Select just one name after `--skill` for an
+independent install. Inspect existing same-name installations before
+replacement; never remove other skills as part of an update.
+
+In skills CLI 1.7.4, a global install writes one shared copy to
+`~/.agents/skills` for every agent that uses `.agents/skills`, and links agents
+with their own directory, such as Claude Code at `~/.claude/skills`. Some
+harnesses do not scan that shared global location; see
+[compatibility](#compatibility-and-delivery).
 
 List installed skills and check source discovery:
 
@@ -62,15 +68,18 @@ credentials.
 
 Local-path installs are installed copies, not live source-checkout links.
 After updating the checkout and reviewing changes, rerun the same local install
-command to refresh only these skills. For remote-backed installations, use:
+command to refresh only these skills. For remote-backed installations, name the
+skills explicitly:
 
 ```sh
-npx skills check
 npx skills update agent-workspace update-memory -g
 ```
 
-Confirm installer/version behavior with `npx skills --help`; avoid a blanket
-update of unrelated skills. For manual installation without Node, copy one
+Avoid unscoped `npx skills update` and `npx skills check`: in skills CLI 1.7.4,
+`check` runs the same code path as `update`, so either form refreshes every
+tracked skill in scope. Use `npx skills list -g` to inspect installations, and
+confirm behavior for other installer versions before relying on a read-only
+check. For manual installation without Node, copy one
 complete `skills/<name>/` directory to the selected harness's documented skill
 directory, preserving bundled resources. Recopy on update.
 
@@ -88,49 +97,27 @@ Invoke by name using the active agent's skill mechanism, or ask for the operatio
 - “Use agent-workspace to clean up these explicitly selected superseded notes.”
 - “Use update-memory to save the accepted decision and unfinished next action.”
 
-`AGENTS.md` remains a minimal context router, generally 150–300 words or fewer.
-Useful supporting resources live under `.agents/`, with `INDEX.md` for nontrivial
-navigation. Optional concepts can be files, directories, existing owners, or
-absent. Familiarize follows the selected workspace's own startup rules and
-relevant owners, reports working understanding and gaps, and leaves records
-unchanged. It does not require a structural audit, fixed core files, account
-probes or an imported native conversation.
+The [approved contracts](docs/design/README.md) own behavior; this summary is
+orientation only:
 
-Initialization creates only grounded resources. Create-new requests preserve
-unexpected destination content; explicit initialization of existing repositories
-remains supported. Rechecking destinations and using non-clobbering writes
-preserves existing roles and intervening work without a fixed six-file template.
-Migration assesses the whole selected directory, including hidden and mixed
-legacy containers. It restructures agent records and non-Markdown artifacts by purpose,
-consolidates knowledge, repairs scoped dependencies and provides selective
-routes to working material, evidence and protected recovery. Each candidate group
-needs a disposition; unresolved portions remain incomplete. Actual deliverables
-and source/product material retain appropriate locations. Nested checkouts may
-relocate intact only when content, Git state and location relationships survive;
-internal restructuring and Git repairs remain separately scoped.
+- **Familiarize, audit and validate** leave the target unchanged. Familiarize
+  follows the workspace's own startup rules and reports file-backed
+  understanding, readiness and gaps, not verified integration access.
+- **Initialize** creates only grounded resources around a minimal `AGENTS.md`
+  router, preserving existing roles, unexpected content and intervening writers.
+- **Migrate and cleanup** assess the whole selected directory, organize agent
+  records and artifacts by purpose under `.agents/`, and keep verified recovery
+  through validation before closing out only the operation's own temporary
+  material. See [migration and safety](docs/design/MIGRATION.md).
+- **update-memory** updates existing authoritative owners, including projects
+  without `.agents/`, refreshes a handoff only when useful, and writes nothing
+  when the context is already recorded or trivial.
 
-Migration recovery protects changes through validation. On successful closeout,
-remove the operation's disposable backup/restore-test copies, intermediates and
-empty containers; retain useful verification evidence. Temporary recovery stays
-only for a specific retention rule or unresolved rollback need, with a removal
-condition. No target-local recovery folder is required. Existing operational
-backups and earlier recovery are separate owners, not automatic cleanup targets.
-
-Memory capture follows existing conventions, including projects without
-`.agents/`. It updates authoritative owners, can create a warranted record, and
-keeps handoffs separate from durable knowledge. Warranted new internal supporting
-records follow established purpose-based placement and discovery, using files or
-directories as needed. Routine capture does not relocate existing resources or
-assess the whole directory. Already recorded or trivial context produces no writes. Neither skill automatically stages, commits, pushes,
-merges, settles a thread, or executes a discovered backlog.
-
-For exact ATX heading reads, `agent-workspace` includes an optional
-[section reader and usage guidance](skills/agent-workspace/references/retrieval.md).
-It preserves descendant boundaries and applicable introductions, rejects
-missing/duplicate targets, and requires only Python's standard library. Ordinary
-file tools remain sufficient; `update-memory` does not depend on this helper or
-the other skill. Readiness is file-backed understanding, not verified access to
-an external integration.
+Neither skill stages, commits, pushes, settles a thread or executes a discovered
+backlog. `agent-workspace` bundles an optional exact-heading
+[section reader](skills/agent-workspace/references/retrieval.md); ordinary file
+tools remain sufficient, and `update-memory` depends on neither the helper nor
+the other skill.
 
 ## Validate
 
@@ -142,50 +129,36 @@ python3 -B skills/agent-workspace/scripts/validate_workspace.py .
 git diff --check
 ```
 
-For a workspace outside the checkout, run the installed helper with an explicit
-target. It is read-only and optional; ordinary skill operation uses available
-file tools and requires no particular runtime. See its
+The unit tests cover the bundled checker and section reader, standalone package
+copies run outside the checkout, repository documentation links/anchors, and a
+static Python 3.9 grammar guard for the helpers. For a workspace outside the
+checkout, run the installed helper with an explicit target. It is read-only and
+optional; ordinary skill operation uses available file tools and requires no
+particular runtime. See its
 [coverage and limits](skills/agent-workspace/references/validation.md).
 
-[Behavioral walkthroughs](tests/scenarios.md) cover initialization, existing Git
-and `.agents/` conventions, migration/recovery, cleanup, optional grilling
-absence, meaningful and no-change capture, independent memory owners, privacy,
-and contested updates. Expansion scenarios cover mixed artifacts, consolidation,
-discovery, dependency blockers, intact checkout relocation and incomplete coverage.
-Familiarization/initialization scenarios cover sparse context, local/nested
-prerequisites, missing context, destination collisions, intervening writers,
-dirty existing repositories and an independently usable optional section reader.
-Assess coverage, semantic preservation and mechanics separately. Keep raw
-inputs/results under ignored `.local/`.
+[Behavioral walkthroughs](tests/scenarios.md) are authored scenarios for
+familiarization, initialization and destination collisions, existing Git and
+`.agents/` conventions, whole-directory migration with mixed artifacts and
+dependency blockers, recovery closeout, cleanup, intact checkout relocation,
+incomplete coverage, optional grilling absence, and meaningful, independent,
+no-change and contested memory capture. Each was exercised against synthetic
+fixtures when introduced. Assess coverage, semantic preservation and mechanics
+separately, and keep raw inputs/results under ignored `.local/`.
 
-Earlier expansion validation on 2026-10-30 passed 11 mechanical/package tests,
-both skill-package validators, repository link checks and synthetic behavioral walkthroughs. The
-expansion walkthroughs checked coverage/dispositions separately from semantic
-preservation and mechanics: mixed artifact consolidation, exact recovery,
-scoped path repairs, protected modes, intact dirty checkout relocation, an
-explicitly unresolved linked-worktree move, selective discovery and routine
-memory maintenance. Source/deliverables and unrelated work survived; no-op
-capture and read-only reruns preserved bytes and timestamps.
-
-The later familiarization/helper implementation passed 23 deterministic tests,
-including the preserved reader behavior, invalid input, independent-package
-execution and source immutability. Authored synthetic walkthroughs exercised
-read-only readiness and local/nested prerequisites, missing context, safe
-initialization/collisions, existing dirty-repository preservation, file-tool
-retrieval and independent meaningful/no-op capture. These source changes require
-separate publication/installation before retiring legacy local workflows.
-
-These authored walkthroughs do not prove future model behavior, complete
-semantic preservation, secret absence, history recovery, native loading or
-race-free writes. Linux was exercised; real persistent-workspace migration is
-separate work. The optional checker cannot certify coverage or artifact purpose.
+Unit tests are mechanical. Authored walkthroughs do not prove future model
+behavior, complete semantic preservation, secret absence, history recovery,
+native loading or race-free writes. Real persistent-workspace migration is
+separate work, and the optional checker cannot certify coverage or artifact
+purpose.
 
 ## Compatibility and delivery
 
 Runtime skills need Markdown file access and a compatible agent capable of
 following instructions. Git, GitHub CLI, Node, Python, and third-party grilling
 skills are not runtime dependencies. The optional checker, section reader and
-tests use Python 3.9+ standard library; the Git fixture skips if Git is unavailable.
+tests use Python 3.9+ standard library; 3.9 is guarded statically, while
+exercised runs used newer CPython. The Git fixture skips if Git is unavailable.
 
 Linux was exercised. macOS should support the portable Markdown and Python
 tooling but was not exercised. Windows file operations can work with suitable
@@ -196,7 +169,9 @@ symlinks are unavailable. The boundary test needs symlink support.
 Discovery, automatic instruction loading, inheritance, and live reload are
 different capabilities. Installed files do not guarantee a running session will
 reload them. Check the selected harness's current documentation and observed
-behavior; start a fresh session when necessary. No adapter is required by estack.
+behavior; start a fresh session when necessary. estack requires no adapter. If a
+selected harness does not scan the installer's target, add only its documented
+pointer or copy for these skills, keeping the installed package as the source.
 
 After installation, check that each selected harness discovers the skill and
 that its bundled resources are accessible outside the source checkout. File

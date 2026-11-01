@@ -8,6 +8,26 @@ import re
 import sys
 from urllib.parse import unquote, urlsplit
 
+# Inline link: destination may be <angle-wrapped> or contain one level of balanced
+# parentheses; optional "double", 'single' or (parenthesized) title.
+LINK = re.compile(r"\[[^\]\n]*\]\((<[^>\n]+>|(?:[^\s()]|\([^\s()]*\))+)"
+                  r"(?:\s+(?:\"[^\"]*\"|'[^']*'|\([^()]*\)))?\s*\)")
+# Code spans cannot cross a blank line; their contents are literal text, not links.
+CODE_SPAN = re.compile(r"(?<!`)(`+)(?!`)((?:(?!\n[ \t]*\n).)+?)(?<!`)\1(?!`)", re.S)
+# Underscore emphasis markers at word edges; intraword underscores are literal.
+EMPHASIS = re.compile(r"(?<!\w)_+|_+(?!\w)")
+
+
+def read(path):
+    """Decode UTF-8, ignoring a leading byte-order mark."""
+    return path.read_text(encoding="utf-8-sig")
+
+
+def unreadable(exc):
+    if isinstance(exc, UnicodeError):
+        return "not readable as UTF-8 Markdown"
+    return f"not readable ({exc.strerror or exc})"
+
 
 def prose(text):
     """Omit fenced examples so template links are not treated as live routes."""
@@ -26,10 +46,21 @@ def prose(text):
     return "\n".join(lines)
 
 
+def heading_slug(title):
+    """Approximate a rendered heading's anchor: link text only, no emphasis markers."""
+    text = re.sub(r"!?\[([^\]]*)\]\([^)]*\)", r"\1", title)
+    rendered, last = [], 0
+    for span in CODE_SPAN.finditer(text):
+        rendered += [EMPHASIS.sub("", text[last:span.start()]), span[2]]
+        last = span.end()
+    rendered.append(EMPHASIS.sub("", text[last:]))
+    return re.sub(r"[^\w\- ]", "", "".join(rendered).lower()).replace(" ", "-")
+
+
 def anchors(text):
     found, counts = set(), {}
-    for title in re.findall(r"^ {0,3}#{1,6}\s+(.+?)\s*#*\s*$", prose(text), re.M):
-        slug = re.sub(r"[^\w\- ]", "", title.lower()).replace(" ", "-")
+    for title in re.findall(r"^ {0,3}#{1,6}[ \t]+(.+?)[ \t]*#*[ \t]*$", prose(text), re.M):
+        slug = heading_slug(title)
         occurrence = counts.get(slug, 0)
         counts[slug] = occurrence + 1
         found.add(slug if not occurrence else f"{slug}-{occurrence}")
@@ -59,13 +90,16 @@ def boundary(path, root):
     return None
 
 
-def documents(root):
+def documents(root, findings):
     router = root / "AGENTS.md"
     if router.is_file() and not router.is_symlink():
         yield router
     resources = root / ".agents"
     if resources.is_dir() and not boundary(resources, root):
-        for folder, dirs, files in os.walk(resources, followlinks=False):
+        def skipped(exc):
+            where = Path(exc.filename).relative_to(root) if exc.filename else ".agents"
+            findings.append(("warning", f"{where}: directory not readable; contents not checked"))
+        for folder, dirs, files in os.walk(resources, onerror=skipped, followlinks=False):
             dirs[:] = sorted(d for d in dirs if not boundary(Path(folder) / d, root))
             for name in sorted(files):
                 path = Path(folder) / name
@@ -74,12 +108,14 @@ def documents(root):
 
 
 def check_links(path, root):
+    try:
+        text = prose(read(path))
+    except (OSError, UnicodeError) as exc:
+        return [("error", f"{path.relative_to(root)}: {unreadable(exc)}; links not checked")]
     findings = []
-    text = prose(path.read_text(encoding="utf-8"))
     if re.search(r"\[[^\]]+\]\[[^\]]*\]|^\s*\[[^\]]+\]:", text, re.M):
         findings.append(("warning", f"{path.relative_to(root)}: reference-style links need manual review"))
-    # Ordinary inline links, including angle-wrapped paths and optional titles.
-    for match in re.finditer(r"\[[^\]\n]*\]\((<[^>]+>|[^\s)]+)(?:\s+\"[^\"]*\")?\)", text):
+    for match in LINK.finditer(CODE_SPAN.sub("", text)):
         destination = match[1].strip("<>")
         url = urlsplit(destination)
         if url.scheme or url.netloc:
@@ -95,7 +131,13 @@ def check_links(path, root):
         elif url.fragment and target.is_file():
             if target.suffix != ".md":
                 findings.append(("warning", f"{label}: non-Markdown anchor needs manual review"))
-            elif unquote(url.fragment) not in anchors(target.read_text(encoding="utf-8")):
+                continue
+            try:
+                found = anchors(read(target))
+            except (OSError, UnicodeError) as exc:
+                findings.append(("error", f"{label}: anchor not checked; target {unreadable(exc)}"))
+                continue
+            if unquote(url.fragment) not in found:
                 findings.append(("error", f"{label}: missing anchor"))
     return findings
 
@@ -115,10 +157,13 @@ def validate(root):
     if not router.exists():
         findings.append(("warning", "AGENTS.md: absent; existing conventions may be valid"))
     elif router.is_file() and not router.is_symlink():
-        count = len(router.read_text(encoding="utf-8").split())
+        try:
+            count = len(read(router).split())
+        except (OSError, UnicodeError):
+            count = 0  # check_links reports the unreadable router once.
         if count > 300:
             findings.append(("warning", f"AGENTS.md: {count} words; review bulk without discarding necessary rules"))
-    paths = list(documents(root))
+    paths = list(documents(root, findings))
     if len(paths) > 2 and not (root / ".agents/INDEX.md").is_file():
         findings.append(("warning", ".agents/INDEX.md: consider navigation for multiple resources"))
     for path in paths:

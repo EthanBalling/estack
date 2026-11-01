@@ -106,6 +106,25 @@ class SectionReaderTests(unittest.TestCase):
         self.assertEqual(self.run_reader("", "## A").returncode, 1)
         self.assertEqual(self.run_reader("# Doc\n", "--list", "# Doc").returncode, 2)
 
+    def test_byte_order_mark_does_not_hide_first_heading(self) -> None:
+        content = "﻿# Doc\nlead\n## A\nx\n"
+        self.assertEqual(self.run_reader(content, "--list").stdout, "1\t# Doc\n3\t## A\n")
+        result = self.run_reader(content, "# Doc")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, "# Doc\nlead\n## A\nx\n")
+
+    def test_trailing_whitespace_is_ignored_and_duplicates_still_fail(self) -> None:
+        content = "# Doc\n## A  \nbody\n## B\t\nb\n"
+        self.assertEqual(self.run_reader(content, "--list").stdout, "1\t# Doc\n2\t## A\n4\t## B\n")
+        for target in ("## A", "## A "):
+            result = self.run_reader(content, target)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout, "## A  \nbody\n")
+        result = self.run_reader("## A\none\n## A \ntwo\n", "## A")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("found 2", result.stderr)
+        self.assertEqual(result.stdout, "")
+
     def test_preamble_does_not_duplicate_target_root(self) -> None:
         self.assertEqual(self.run_reader("lead\n# Doc\nscope\n## A\na\n", "# Doc", "--preamble").stdout, "lead\n# Doc\nscope\n## A\na\n")
 

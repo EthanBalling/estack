@@ -30,6 +30,6 @@ Do not reorganize Git administration independently or repair repository internal
 
 ## Git and concurrent work
 
-Git is optional. When present, inspect status, staged/untracked changes, and relevant tracking/exclusion rules before and after. Preserve the index and unrelated dirty files. Moves may appear as unstaged deletions/new files; report them. Migration alone never authorizes staging, committing, pushing, changing ignore/tracking rules, remotes, or global configuration. If a move risks exporting previously private content, preserve the privacy boundary and stop that portion unless the required exclusion change is separately authorized.
+Git is optional. When present, inspect status, staged/untracked changes, and relevant tracking/exclusion rules before and after. Preserve the Git index and unrelated dirty files. Moves may appear as unstaged deletions/new files; report them. Migration alone never authorizes staging, committing, pushing, changing ignore/tracking rules, remotes, or global configuration. If a move risks exporting previously private content, preserve the privacy boundary and stop that portion unless the required exclusion change is separately authorized.
 
 Coordinate known overlapping writers when possible. If a contested edit cannot be reconciled, leave it unapplied and report the unsaved proposal in the conversation or an existing project-prescribed conflict location. Shared files do not provide race-free writes; no mandatory queue or locking service is needed.
